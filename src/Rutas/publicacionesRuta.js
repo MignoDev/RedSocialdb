@@ -46,8 +46,6 @@ module.exports = function () {
             id_publicacion: null,
             id_perfil: req.body.id_perfil,
             texto_publicacion: req.body.texto_publicacion,
-            foto_publicacion: req.body.foto_publicacion,
-
         };
 
         //usamos la funcion para insertar

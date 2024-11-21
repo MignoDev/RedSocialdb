@@ -28,13 +28,7 @@ amigoModelo.getAmigos = function (callback) {
 amigoModelo.getAmigo = function (id, callback) {
 
     if (connection) {
-        var sql = "SELECT id_amigo, "
-            + "id_perfil, "
-            + "id_perfil_amigo, "
-            + "estado_solicitud AS Solicitud_Amistad "
-            + "FROM tt_amigos WHERE id_amigo ="
-            + connection.escape(id) + ";";
-
+        var sql = "SELECT p.id_perfil, p.nickname_perfil FROM tt_perfil AS p WHERE p.id_perfil != " + connection.escape(id) + " AND p.id_perfil NOT IN(SELECT a.id_perfil_amigo FROM tt_amigos AS a WHERE a.id_perfil = " + connection.escape(id) + " UNION SELECT a.id_perfil FROM tt_amigos AS a WHERE a.id_perfil_amigo = " + connection.escape(id) + ");";
 
         connection.query(sql, function (error, rows) {
             if (error) {
