@@ -82,6 +82,20 @@ amigoModelo.getAmigosByPerfil = function (id_perfil, callback) {
         });
     }
 };
+
+amigoModelo.deleteAmigo = function (id_perfil, id_perfil_amigo, callback) {
+    if (connection) {
+        var sql = "DELETE FROM tt_amigos WHERE (id_perfil = " + connection.escape(id_perfil) + " and id_perfil_amigo = " + connection.escape(id_perfil_amigo) + ") or ( id_perfil = " + connection.escape(id_perfil_amigo) + " and id_perfil_amigo " + connection.escape(id_perfil) + ");";
+
+        connection.query(sql, function (error, rows) {
+            if (error) {
+                throw error;
+            } else {
+                callback(null, JSON.stringify(rows));
+            }
+        });
+    }
+};
 /*
 //---------------------------------------------------------------
 //actualizar un tipo de documento

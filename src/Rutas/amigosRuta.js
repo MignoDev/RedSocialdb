@@ -103,5 +103,25 @@ module.exports = function () {
         });
     });
 
+    router.delete("/:id_perfil/:id_perfil_amigo", function (req, res) {
+        var id_perfil = req.params.id_perfil;
+        var id_perfil_amigo = req.params.id_perfil_amigo;
+
+        //solo actualizamos si la id es un número
+        if (!isNaN(id_perfil) && !isNaN(id_perfil_amigo)) {
+            amigoModelo.deleteAmigo(id_perfil, id_perfil_amigo, function (error, data) {
+                if (data && data.msg === "Eliminado" || data.msg == "No existe") {
+                    res.status(200).json(data);
+                }
+                else {
+                    res.status(500).json({ "msg": "Error" });
+                }
+            });
+        }
+        else {
+            res.status(500).json({ "msg": "No es un número" });
+        }
+    });
+
     return router;
 }
